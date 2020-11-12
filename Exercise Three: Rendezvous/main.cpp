@@ -1,3 +1,4 @@
+/*< Author: Daniel Polak*/
 #include "Semaphore.h"
 #include <iostream>
 #include <thread>
@@ -13,6 +14,8 @@
 void taskOne(std::shared_ptr<Semaphore> firstSem,std::shared_ptr<Semaphore>  secondSem, int delay){
   std::this_thread::sleep_for(std::chrono::seconds(delay));
   std::cout <<"Task One has arrived! "<< std::endl;
+  firstSem->Signal();
+  secondSem->Wait();
   //THIS IS THE RENDEZVOUS POINT!
   std::cout << "Task One has left!"<<std::endl;
 }
