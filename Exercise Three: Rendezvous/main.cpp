@@ -14,17 +14,23 @@
 void taskOne(std::shared_ptr<Semaphore> firstSem,std::shared_ptr<Semaphore>  secondSem, int delay){
   std::this_thread::sleep_for(std::chrono::seconds(delay));
   std::cout <<"Task One has arrived! "<< std::endl;
+  //Task one will arrive second
   firstSem->Signal();
-  secondSem->Wait();
   //THIS IS THE RENDEZVOUS POINT!
+  //Task one will leave first
   std::cout << "Task One has left!"<<std::endl;
+  secondSem->Signal();
 }
 /*! displays a message that is split in to 2 sections to show how a rendezvous works*/
 void taskTwo(std::shared_ptr<Semaphore> firstSem, std::shared_ptr<Semaphore> secondSem, int delay){
   std::this_thread::sleep_for(std::chrono::seconds(delay));
   std::cout <<"Task Two has arrived "<<std::endl;
+  //Task two will arrive first
+  firstSem->Wait();
   //THIS IS THE RENDEZVOUS POINT!
+  //Task two will leave second
   std::cout << "Task Two has left "<<std::endl;
+  secondSem->Wait();
 }
 
 int main(void){
