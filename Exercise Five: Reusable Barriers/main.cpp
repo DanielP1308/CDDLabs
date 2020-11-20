@@ -4,6 +4,7 @@
 #include <vector>
 
 
+
 static const int num_threads = 100;
 int sharedVariable=0;
 
@@ -15,14 +16,13 @@ int sharedVariable=0;
 void barrierTask(std::shared_ptr<Barrier> theBarrier, int numLoops){
 
   for(int i=0;i<numLoops;++i){
-    //Do first bit of task
     std::cout << "A"<< i;
     //Barrier
     theBarrier.wait();
     //Do second half of task
     std::cout<< "B" << i;
   }
-  
+
 
 }
 
